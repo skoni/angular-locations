@@ -1,0 +1,1 @@
+grunt ngconstant && grunt concat && npm test

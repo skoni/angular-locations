@@ -1,0 +1,27 @@
+{
+  "name": "ehealthlocations",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "Francesco Occhipinti",
+      "email": "f.occhipinti@gmail.com"
+    }
+  ],
+  "main": [
+    "dist/ehealthlocations.js"
+  ],
+  "ignore": [
+    "src",
+    "test",
+    "Gruntfile.js",
+    "**/.*"
+  ],
+  "dependencies": {
+    "angular": "~1.2.21",
+    "locations": "git@github.com:eHealthAfrica/locations.git#1.4.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.21",
+    "angular-scenario": "~1.2.21"
+  }
+}
