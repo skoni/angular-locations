@@ -10,9 +10,11 @@ angular.module('eHealth.locations.config', [])
 
 // Modules
 angular.module('eHealth.locations.directives', []);
-angular.module('eHealth.locations.filters', []);
+angular.module('eHealth.locations.filters', [
+  'eHealth.locations.services'
+]);
 angular.module('eHealth.locations.services', [
-  'eHealth.locations.data',
+  'eHealth.locations.data'
 ]);
 angular.module('eHealth.locations', [
   'eHealth.locations.config',
