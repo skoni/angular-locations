@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "angular": "~1.2.21",
-    "locations": "git@github.com:eHealthAfrica/locations.git#1.4.0"
+    "locations": "https://github.com/eHealthAfrica/locations.git#1.4.0"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.21",
