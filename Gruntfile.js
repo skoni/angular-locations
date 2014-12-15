@@ -76,6 +76,12 @@ module.exports = function (grunt) {
         }
       },
       build: {}
+    },
+    karma: {
+      unit: {
+        configFile: 'karma-unit.conf.js',
+        singleRun: true
+      }
     }
   });
 
@@ -84,8 +90,13 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-ng-constant');
+  grunt.loadNpmTasks('grunt-karma');
 
   grunt.registerTask('default', ['jshint:beforeConcat', 'concat', 'jshint:afterConcat', 'uglify']);
   grunt.registerTask('livereload', ['default', 'watch']);
-
+  grunt.registerTask('test', [
+    'ngconstant',
+    'concat',
+    'karma'
+  ])
 };
