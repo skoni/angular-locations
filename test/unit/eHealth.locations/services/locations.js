@@ -16,4 +16,7 @@ describe('Service: locations', function () {
   it('has the expected name for the first level', function(){
     expect(locations[0].name).toBe('région');
   });
+  it('decodes a specific code at a specific level', function(){
+    expect(locations.decode('MM', 1)).toBe('Mopti');
+  });
 });

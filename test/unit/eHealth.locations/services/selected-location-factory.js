@@ -9,32 +9,32 @@ var testLocationData = [{
   depth: 0,
   name: 'Zero',
   items: [{
-    name: 'a',
+    name: 'zero one',
     id: 1
   }, {
-    name: 'b',
+    name: 'zero two',
     id: 2
   }]
 }, {
   depth: 1,
   name: 'One',
   items: [{
-    name: 'a a',
+    name: 'one one',
     id: 1,
     parentId: 1
   }, {
-    name: 'b b',
+    name: 'one two',
     id: 2,
     parentId: 2
   }]
 }, {
   depth: 2,
   items: [{
-    name: 'a a',
+    name: 'two one',
     id: 1,
     parentId: 1
   }, {
-    name: 'b b b',
+    name: 'two two',
     id: 2,
     parentId: 2
   }]
@@ -118,6 +118,58 @@ describe('Service: SelectedLocationFactory', function () {
       var cloned = location.clone();
       expect(cloned.compare(location)).toBe(true);
       expect(location.levels[0].selected).toEqual(cloned.levels[0].selected);
+    });
+    it('reads admin divisions', function() {
+      location.setAdminDivisions({
+        adminDivision1: 1,
+        adminDivision2: 1
+      });
+      expect(location.levels[0].selected.name).toBe('zero one');
+      expect(location.levels[1].selected.name).toBe('one one');
+      expect(location.levels[2].selected).toBeUndefined();
+    });
+    it('ignores inconsistent parents', function() {
+      location.setAdminDivisions({
+        adminDivision1: 1,
+        adminDivision2: 2
+      });
+      expect(location.levels[0].selected.name).toBe('zero two');
+      expect(location.levels[1].selected.name).toBe('one two');
+      expect(location.levels[2].selected).toBeUndefined();
+    });
+    it('ignores undefined parents', function() {
+      location.setAdminDivisions({
+        adminDivision2: 2
+      });
+      expect(location.levels[0].selected.name).toBe('zero two');
+      expect(location.levels[1].selected.name).toBe('one two');
+      expect(location.levels[2].selected).toBeUndefined();
+    });
+    it('ignores missing codes, check issue #2', function() {
+      expect(function() {
+        location.setAdminDivisions({
+          adminDivision2: 'jumping troll'
+        });
+      }).not.toThrow();
+    });
+    it('gives admin divisions', function() {
+      location.select(1, 2);
+      expect(location.getAdminDivisions()).toEqual({
+        adminDivision1: 2,
+        adminDivision2: 2
+      });
+    });
+    it('adds admin divisions to existing objects', function() {
+      var person = {
+        name: 'Francesco'
+      };
+      location.select(1, 1);
+      expect(location.getAdminDivisions(person)).toEqual({
+        name: 'Francesco',
+        adminDivision1: 1,
+        adminDivision2: 1
+      });
+      expect(person.adminDivision1).toBe(1);
     });
 
     describe('with all-items', function() {
