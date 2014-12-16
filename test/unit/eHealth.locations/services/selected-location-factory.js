@@ -152,6 +152,11 @@ describe('Service: SelectedLocationFactory', function () {
         });
       }).not.toThrow();
     });
+    it('ignores missing objects as well!', function() {
+      expect(function() {
+        location.setAdminDivisions();
+      }).not.toThrow();
+    });
     it('gives admin divisions', function() {
       location.select(1, 2);
       expect(location.getAdminDivisions()).toEqual({

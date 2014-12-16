@@ -89,7 +89,7 @@ angular.module('eHealth.locations.services')
             if (level[code]) {
               return level[code].name;
             } else {
-              $log.error('we cannot find code '+code+' in locations level'+
+              $log.error('we cannot find code '+code+' in locations level '+
                          locations[l].name);
             }
           } else {
@@ -224,27 +224,31 @@ angular.module('eHealth.locations.services')
           return equal;
         },
         setAdminDivisions: function(obj) {
-          // selected locations have the constraint that lower level
-          // locations must be child of the higher level ones, while
-          // in the object we might have inconsistencies. starting
-          // from the bottom, pick the most specific regional info if
-          // available and ignore the rest. this code assumes that we
-          // have no more than 5 administrative levels
-          var toBeSelected = true;
-          [5, 4, 3, 2, 1].forEach(function(n) {
-            if (toBeSelected) {
-              var i = n - 1,
-                  id = obj['adminDivision'+n];
-              if (id) {
-                try {
-                  location.select(i, id);
-                  toBeSelected = false;
-                } catch (error) {
-                  $log.error(error);
+          if (obj) {
+            // selected locations have the constraint that lower level
+            // locations must be child of the higher level ones, while
+            // in the object we might have inconsistencies. starting
+            // from the bottom, pick the most specific regional info if
+            // available and ignore the rest. this code assumes that we
+            // have no more than 5 administrative levels
+            var toBeSelected = true;
+            [5, 4, 3, 2, 1].forEach(function(n) {
+              if (toBeSelected) {
+                var i = n - 1,
+                    id = obj['adminDivision'+n];
+                if (id) {
+                  try {
+                    location.select(i, id);
+                    toBeSelected = false;
+                  } catch (error) {
+                    $log.error(error);
+                  }
                 }
               }
-            }
-          });
+            });
+          } else {
+            $log.error('`setAdminDivisions` was called on a `'+obj+'` object');
+          }
           return location;
         },
         getAdminDivisions: function(adminDivisions) {

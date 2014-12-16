@@ -2,7 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - unreleased
+## [1.3.0] - 2014-12-16
+### Added
+- `setAdminDivisions` can be called on an undefined object without
+  rising an exception
 ### Fixed
 - text in an error message
 
