@@ -1,3 +1,4 @@
+'use strict';
 module.exports = function (grunt) {
 
   grunt.initConfig({
@@ -31,7 +32,13 @@ module.exports = function (grunt) {
     },
     jshint: {
       beforeConcat: {
-        src: ['gruntfile.js', 'eHealth.locations/**/*.js']
+        options: {
+          // allow to have global 'use stricts' statements. strict
+          // statements will be removed anyway from the
+          // `remove_usestrict` task below
+          globalstrict: true
+        },
+        src: ['gruntfile.js', 'src/eHealth.locations/**/*.js']
       },
       afterConcat: {
         src: [
@@ -46,8 +53,7 @@ module.exports = function (grunt) {
           module: true,
           document: true,
           angular: true
-        },
-        globalstrict: false
+        }
       }
     },
     watch: {
@@ -82,6 +88,21 @@ module.exports = function (grunt) {
         configFile: 'karma-unit.conf.js',
         singleRun: true
       }
+    },
+    ngAnnotate: {
+      app: {
+        files: {
+          'dist/ehealthlocations.js': ['src/eHealth.locations/{*,**/*}.js']
+        }
+      }
+    },
+    remove_usestrict: {
+      dist: {
+        files: [{
+          expand: true,
+          src: 'dist/ehealthlocations.js'
+        }]
+      }
     }
   });
 
@@ -91,12 +112,20 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-ng-constant');
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-ng-annotate');
+  grunt.loadNpmTasks('grunt-remove-usestrict');
 
-  grunt.registerTask('default', ['jshint:beforeConcat', 'concat', 'jshint:afterConcat', 'uglify']);
+  grunt.registerTask('default', [
+    'jshint:beforeConcat',
+    'ngAnnotate',
+    'remove_usestrict',
+    'jshint:afterConcat',
+    'uglify'
+  ]);
   grunt.registerTask('livereload', ['default', 'watch']);
   grunt.registerTask('test', [
     'ngconstant',
     'concat',
     'karma'
-  ])
+  ]);
 };

@@ -40,5 +40,5 @@ angular.module('eHealth.locations.services')
               countryCode+'`';
         throw new Error(e);
       }
-    }
+    };
   });

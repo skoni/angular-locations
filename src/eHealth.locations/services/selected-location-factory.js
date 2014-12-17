@@ -3,8 +3,8 @@
 angular.module('eHealth.locations.services')
   .factory('selectedLocationFactory', function (locations, $log) {
     function create(options) {
-      var options = options || {},
-          hasAllItem = options.hasAllItem,
+      options = options || {};
+      var hasAllItem = options.hasAllItem,
           locationsData = options.locationsData || locations,
           original = angular.copy(locationsData),
           levels = [],
@@ -44,7 +44,7 @@ angular.module('eHealth.locations.services')
           reset(depth);
           levels[depth].selectById(selected.parentId);
           updateUp(levels[depth].selected, depth - 1);
-        };
+        }
         function updateDown(selected, depth) {
           var level = levels[depth];
           if (level) {
@@ -75,7 +75,7 @@ angular.module('eHealth.locations.services')
           } else {
             return;
           }
-        };
+        }
         level.update = function () {
           updateUp(level.selected, index - 1);
           updateDown(level.selected, index + 1);
