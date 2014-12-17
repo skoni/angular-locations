@@ -5,6 +5,10 @@ file. This file is structured according to http://keepachangelog.com/
 
 - - -
 
+## [1.4.1] - 2014-12-17
+### Fixed
+- Avoid logging an error when decoding and filtering an undefined code
+
 ## [1.4.0] - 2014-12-17
 ### Added
 - The library has now annotations so it can be safely minified. A
