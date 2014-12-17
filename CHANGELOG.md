@@ -1,6 +1,18 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
+All notable changes to this project will be documented in this
+file. This file is structured according to http://keepachangelog.com/
+
+- - -
+
+## [1.4.1] - 2014-12-17
+### Fixed
+- Avoid logging an error when decoding and filtering an undefined code
+
+## [1.4.0] - 2014-12-17
+### Added
+- The library has now annotations so it can be safely minified. A
+  minified version is distributed as well
 
 ## [1.3.0] - 2014-12-16
 ### Added
@@ -17,7 +29,3 @@ All notable changes to this project will be documented in this file.
 ### Added
 - `locations.decode` method
 - `adminDivision` filter
-
-- - -
-
-Change log structured according to http://keepachangelog.com/

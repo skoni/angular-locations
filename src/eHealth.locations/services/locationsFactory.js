@@ -21,17 +21,21 @@ angular.module('eHealth.locations.services')
           return index;
         });
         locations.decode = function(code, l) {
-          var level = indexes[l];
-          if (level) {
-            if (level[code]) {
-              return level[code].name;
-            } else {
-              $log.error('we cannot find code '+code+' in locations level '+
-                         locations[l].name);
-            }
+          if (typeof code === 'undefined') {
+            return;
           } else {
-            $log.error(countryCode+' locations have only '+indexes.length+
-                  ' levels');
+            var level = indexes[l];
+            if (level) {
+              if (level[code]) {
+                return level[code].name;
+              } else {
+                $log.error('we cannot find code '+code+' in locations level '+
+                           locations[l].name);
+              }
+            } else {
+              $log.error(countryCode+' locations have only '+indexes.length+
+                         ' levels');
+            }
           }
         };
         return locations;
@@ -40,5 +44,5 @@ angular.module('eHealth.locations.services')
               countryCode+'`';
         throw new Error(e);
       }
-    }
+    };
   });
