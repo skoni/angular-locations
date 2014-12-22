@@ -6,6 +6,10 @@ file. This file is structured according to http://keepachangelog.com/
 - - -
 ## [1.5.1] - 2014-12-22
 ### Fixed
+- Fixed Gruntfile to build locations.
+
+## [1.5.1] - 2014-12-22
+### Fixed
 - Add Madagascar to the Gruntfile and the locations factory.
 - Fix: Sierra Leona was using Liberia locations.
 
