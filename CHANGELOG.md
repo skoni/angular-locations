@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this
 file. This file is structured according to http://keepachangelog.com/
 
 - - -
+## [1.5.1] - 2014-12-22
+### Fixed
+- Add Madagascar to the Gruntfile and the locations factory.
+- Fix: Sierra Leona was using Liberia locations.
+
 ## [1.5.0] - 2014-12-22
 ### Added
 - Add support for Madagascar locations.

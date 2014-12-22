@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('eHealth.locations.services')
-  .factory('locationsFactory', function($log, ml, gn, lr, sl) {
+  .factory('locationsFactory', function($log, ml, gn, lr, sl, mg) {
     var map = {
       ml: ml,
       gn: gn,
       gin: gn,
       lr: lr,
-      sl: lr
+      sl: sl,
+      mg: mg
     };
     return function(countryCode) {
       if (countryCode in map) {
