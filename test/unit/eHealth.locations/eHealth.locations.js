@@ -24,22 +24,15 @@ describe('', function() {
         expect(hasModule('eHealth.locations.config')).toBeTruthy();
     });
 
-    
     it('should load filters module', function() {
         expect(hasModule('eHealth.locations.filters')).toBeTruthy();
     });
-    
 
-    
     it('should load directives module', function() {
         expect(hasModule('eHealth.locations.directives')).toBeTruthy();
     });
-    
 
-    
     it('should load services module', function() {
         expect(hasModule('eHealth.locations.services')).toBeTruthy();
     });
-    
-
 });
