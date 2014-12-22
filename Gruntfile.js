@@ -78,7 +78,9 @@ module.exports = function (grunt) {
           lr: grunt.file
             .readJSON('bower/locations/json/liberia.json'),
           gn: grunt.file
-            .readJSON('bower/locations/json/guinea.json')
+            .readJSON('bower/locations/json/guinea.json'),
+          mg: grunt.file
+            .readJSON('bower/locations/json/madagascar.json')
         }
       },
       build: {}

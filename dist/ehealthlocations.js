@@ -66,13 +66,14 @@ angular.module('eHealth.locations.services')
 
 
 angular.module('eHealth.locations.services')
-  .factory('locationsFactory', ["$log", "ml", "gn", "lr", "sl", function($log, ml, gn, lr, sl) {
+  .factory('locationsFactory', ["$log", "ml", "gn", "lr", "sl", "mg", function($log, ml, gn, lr, sl, mg) {
     var map = {
       ml: ml,
       gn: gn,
       gin: gn,
       lr: lr,
-      sl: lr
+      sl: sl,
+      mg: mg
     };
     return function(countryCode) {
       if (countryCode in map) {
