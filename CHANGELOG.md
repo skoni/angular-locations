@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this
 file. This file is structured according to http://keepachangelog.com/
 
 - - -
-## [1.5.1] - 2014-12-22
+## [1.5.2] - 2014-12-22
 ### Fixed
 - Fixed Gruntfile to build locations.
 
