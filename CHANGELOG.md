@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this
 file. This file is structured according to http://keepachangelog.com/
 
 - - -
+## [1.6.0] - 2015-02-04
+### Added
+- Feature: ability to restrict locations
+
 ## [1.5.2] - 2014-12-22
 ### Fixed
 - Fixed Gruntfile to build locations.
