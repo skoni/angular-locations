@@ -40,6 +40,29 @@ var testLocationData = [{
   }]
 }];
 
+var mockCurrentUser = {
+  "name": "matt-test-gin",
+  "roles": ["dispatcher", "gin_call_user_role"],
+  "details": {
+    "fullName": "Matt Test (Guinea)",
+    "role": "Suivi",
+    "app": "Guinea Call Centre"
+  },
+  "locations": [
+    {
+    "name": "two one",
+    "id": 1,
+    "level": 2
+  },
+  {
+    "name": "zero one",
+    "id": 1,
+    "level": 0,
+    "default": true
+  }
+  ]
+};
+
 describe('Service: SelectedLocationFactory', function () {
 
   // load the service's module
@@ -196,6 +219,42 @@ describe('Service: SelectedLocationFactory', function () {
         locsWithAll.levels[0].selected = locsWithAll.levels[0].items[1];
         locsWithAll.levels[0].update();
         expect(locsWithAll.levels[1].selected.isAll);
+      });
+    });
+  });
+
+  describe('Filtering / Restrictions', function () {
+    var location;
+
+    describe('Restricted', function () {
+
+      beforeEach(function() {
+        location = selectedLocationFactory({
+          locationsData: testLocationData,
+          restrictByLocations: mockCurrentUser.locations
+        });
+      });
+
+      it('should filter locations by user restriction when passed with restrict flag', function () {
+        expect(location.levels[0].items.length).toBe(1);
+        expect(location.levels[1].items.length).toBe(0);
+        expect(location.levels[2].items.length).toBe(1);
+        expect(location.levels[0].items[0].name).toEqual(mockCurrentUser.locations[1].name);
+        expect(location.levels[2].items[0].name).toEqual(mockCurrentUser.locations[0].name);
+      });
+    });
+
+    describe('Unrestricted', function() {
+      beforeEach(function() {
+        location = selectedLocationFactory({
+          locationsData: testLocationData,
+        });
+      });
+
+      it('should not filter locations by user restriction when not passed with restrict flag', function() {
+        expect(location.levels[0].items.length).toBe(2);
+        expect(location.levels[1].items.length).toBe(2);
+        expect(location.levels[2].items.length).toBe(2);
       });
     });
   });
