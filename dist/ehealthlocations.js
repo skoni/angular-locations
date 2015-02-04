@@ -119,6 +119,27 @@ angular.module('eHealth.locations.services')
 
 angular.module('eHealth.locations.services')
   .factory('selectedLocationFactory', ["locations", "$log", function (locations, $log) {
+
+    // Restrict locations. This originally leveraged lodash/underscore _.filter
+    // & _.find functions, as lodash/underscore is not available in this
+    // project, and while we can't rely on native implenetations accross
+    // different environements just yet, and in the name of keeping things lean
+    // and performant (at the price of readability / cleanliness), we'll do
+    // this the ugly way
+    function restrictLocations(locations, restrictions, level) {
+      var restrictedLocations = [];
+      for (var locationsIndex=0; locationsIndex < locations.length; locationsIndex++) {
+        var location = locations[locationsIndex];
+        for (var restrictionsIndex=0; restrictionsIndex < restrictions.length; restrictionsIndex++) {
+          var restriction = restrictions[restrictionsIndex];
+          if (restriction.name === location.name && restriction.id === location.id && restriction.level === level) {
+            restrictedLocations.push(locations[locationsIndex]);
+          }
+        }
+      }
+      return restrictedLocations;
+    }
+
     function create(options) {
       options = options || {};
       var hasAllItem = options.hasAllItem,
@@ -197,6 +218,12 @@ angular.module('eHealth.locations.services')
           updateUp(level.selected, index - 1);
           updateDown(level.selected, index + 1);
         };
+
+        if (options.restrictByLocations) {
+          var items = restrictLocations(level.items, options.restrictByLocations, index);
+          level.items = items;
+        }
+
         levels[index] = level;
       }
 
