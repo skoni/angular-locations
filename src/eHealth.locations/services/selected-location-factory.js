@@ -143,7 +143,8 @@ angular.module('eHealth.locations.services')
           }
           return equal;
         },
-        setAdminDivisions: function(obj) {
+        // pass optional getter function to get the id from the data property
+        setAdminDivisions: function(obj, getter) {
           if (obj) {
             // selected locations have the constraint that lower level
             // locations must be child of the higher level ones, while
@@ -155,7 +156,8 @@ angular.module('eHealth.locations.services')
             [5, 4, 3, 2, 1].forEach(function(n) {
               if (toBeSelected) {
                 var i = n - 1,
-                    id = obj['adminDivision'+n];
+                    val = obj['adminDivision'+n],
+                    id = idGetter ? idGetter(val) : val;
                 if (id) {
                   try {
                     location.select(i, id);
@@ -171,11 +173,13 @@ angular.module('eHealth.locations.services')
           }
           return location;
         },
-        getAdminDivisions: function(adminDivisions) {
+        // pass optional setter function to set the location value in the data
+        getAdminDivisions: function(adminDivisions, setter) {
           adminDivisions = adminDivisions || {};
           levels.forEach(function(level, index) {
             if (level.selected) {
-              var key = 'adminDivision'+(index+1);
+              var key = 'adminDivision'+(index+1),
+                  val = setter ? setter(level.selected) : level.selected.id;
               adminDivisions[key] = level.selected.id;
             }
           });
