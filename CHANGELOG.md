@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this
 file. This file is structured according to http://keepachangelog.com/
 
 - - -
+## [1.6.1] - 2015-02-10
+### Fixed
+- Bump location dependency for fixed guinea data
+
 ## [1.6.0] - 2015-02-04
 ### Added
 - Feature: ability to restrict locations
