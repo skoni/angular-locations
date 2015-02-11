@@ -2,7 +2,7 @@
 
 # eHealth.locations
 
-To build this, run the following:
+To run the tests and build, run:
 
     $ grunt
 

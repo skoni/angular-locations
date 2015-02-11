@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this
 file. This file is structured according to http://keepachangelog.com/
 
 - - -
+	
+## 1.7.0 - 2015-02-11
+### Added
+- Add the `deselect` method in levels
+
 ## [1.6.1] - 2015-02-10
 ### Fixed
 - Bump location dependency for fixed guinea data

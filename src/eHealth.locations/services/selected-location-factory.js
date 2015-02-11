@@ -77,8 +77,7 @@ angular.module('eHealth.locations.services')
               // in case we have an all-item, always select the all-item
               if (hasAllItem) {
                 level.selected = level.items[0];
-              }
-              else {
+              } else {
                 // cancel the selection if invalid
                 var found;
                 level.items.forEach(function(item) {
@@ -100,6 +99,11 @@ angular.module('eHealth.locations.services')
         level.update = function () {
           updateUp(level.selected, index - 1);
           updateDown(level.selected, index + 1);
+        };
+        level.deselect = function() {
+          for (var i = index; i < levels.length; i++) {
+            reset(i);
+          }
         };
 
         if (options.restrictByLocations) {
