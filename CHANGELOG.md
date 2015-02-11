@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this
 file. This file is structured according to http://keepachangelog.com/
 
 - - -
-	
+
+## Unreleased
+### Fixed
+- Avoid throwing exceptions when `update` is called on an unselected level
+
 ## 1.7.0 - 2015-02-11
 ### Added
 - Add the `deselect` method in levels

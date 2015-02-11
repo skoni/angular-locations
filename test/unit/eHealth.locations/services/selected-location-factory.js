@@ -292,6 +292,13 @@ describe('Service: SelectedLocationFactory', function () {
           adminDivision1 : 'B'
         });
       });
+      it('can update after deselect', function() {
+        location.levels[1].deselect();
+        location.levels[1].update();
+        expect(location.getAdminDivisions()).toEqual({
+          adminDivision1 : 'B'
+        });
+      });
     });
   });
 });
