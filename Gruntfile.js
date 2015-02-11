@@ -118,7 +118,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-remove-usestrict');
 
   grunt.registerTask('default', [
-    'ngconstant',
+    'test',
     'jshint:beforeConcat',
     'ngAnnotate',
     'remove_usestrict',
