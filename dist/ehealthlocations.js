@@ -176,41 +176,45 @@ angular.module('eHealth.locations.services')
           }
         };
         function updateUp(selected, depth) {
-          if (depth < 0 || selected.isAll) {
-            return;
+          if (selected) {
+            if (depth < 0 || selected.isAll) {
+              return;
+            }
+            reset(depth);
+            levels[depth].selectById(selected.parentId);
+            updateUp(levels[depth].selected, depth - 1);
           }
-          reset(depth);
-          levels[depth].selectById(selected.parentId);
-          updateUp(levels[depth].selected, depth - 1);
         }
         function updateDown(selected, depth) {
-          var level = levels[depth];
-          if (level) {
-            // get all the locations in the level below that belong here
-            level.items = level.original.items.filter(function (item) {
-              return selected.isAll || item.isAll || item.parentId === selected.id;
-            });
-            if (level.selected) {
-              // in case we have an all-item, always select the all-item
-              if (hasAllItem) {
-                level.selected = level.items[0];
-              } else {
-                // cancel the selection if invalid
-                var found;
-                level.items.forEach(function(item) {
-                  if (item.id === level.selected.id) {
-                    found = true;
+          if (selected) {
+            var level = levels[depth];
+            if (level) {
+              // get all the locations in the level below that belong here
+              level.items = level.original.items.filter(function (item) {
+                return selected.isAll || item.isAll || item.parentId === selected.id;
+              });
+              if (level.selected) {
+                // in case we have an all-item, always select the all-item
+                if (hasAllItem) {
+                  level.selected = level.items[0];
+                } else {
+                  // cancel the selection if invalid
+                  var found;
+                  level.items.forEach(function(item) {
+                    if (item.id === level.selected.id) {
+                      found = true;
+                    }
+                  });
+                  if (!found) {
+                    delete level.selected;
                   }
-                });
-                if (!found) {
-                  delete level.selected;
                 }
               }
+              // continue recursively
+              updateDown(level.items[0], depth + 1);
+            } else {
+              return;
             }
-            // continue recursively
-            updateDown(level.items[0], depth + 1);
-          } else {
-            return;
           }
         }
         level.update = function () {
