@@ -275,5 +275,23 @@ describe('Service: SelectedLocationFactory', function () {
     it('gets country location data from the `locations` service', function(){
       expect(location.levels.length).toBe(3);
     });
+    describe('with levels selected', function() {
+      beforeEach(function() {
+        location.select(2, 1);
+      });
+      it('has levels selected', function() {
+        expect(location.getAdminDivisions()).toEqual({
+          adminDivision1 : 'B',
+          adminDivision2 : 'BB',
+          adminDivision3 : 1
+        });
+      });
+      it('allows to deselect a level and all the levels below', function() {
+        location.levels[1].deselect();
+        expect(location.getAdminDivisions()).toEqual({
+          adminDivision1 : 'B'
+        });
+      });
+    });
   });
 });
