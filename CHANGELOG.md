@@ -5,11 +5,14 @@ file. This file is structured according to http://keepachangelog.com/
 
 - - -
 
-## Unreleased
+## [1.8.0] - 2015-02-20
+### Changed
+- New locations version
+
 ### Fixed
 - Avoid throwing exceptions when `update` is called on an unselected level
 
-## 1.7.0 - 2015-02-11
+## [1.7.0] - 2015-02-11
 ### Added
 - Add the `deselect` method in levels
 
