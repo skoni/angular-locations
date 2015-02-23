@@ -81,15 +81,18 @@ describe('Service: SelectedLocationFactory', function () {
     // i tried to test performances here. actually before this test
     // could even fail, demanding computation caused the Karma runner
     // to lose connection with PhantomJS, either ways the test failed
-    it('creates a new object in less than half a second', function() {
+    it('creates a new object in less than ten milliseconds', function() {
       runs(function() {
         setTimeout(function() {
           location = selectedLocationFactory();
         });
       });
       waitsFor(function() {
-      return location;
-      }, 'the selected location should be created', 500);
+        return location;
+      }, 'the selected location should be created', 10);
+      runs(function() {
+        expect(location).toBeDefined();
+      });
     });
   });
   describe('with locations for Mali', function(){
