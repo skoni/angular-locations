@@ -5,6 +5,11 @@ file. This file is structured according to http://keepachangelog.com/
 
 - - -
 
+## Unreleased
+### Added
+- Performance improvements when creating a selected location over
+  levels with an high number of items (thousands)
+
 ## [1.8.0] - 2015-02-20
 ### Changed
 - New locations version

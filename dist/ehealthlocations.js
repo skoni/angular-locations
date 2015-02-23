@@ -144,12 +144,18 @@ angular.module('eHealth.locations.services')
       options = options || {};
       var hasAllItem = options.hasAllItem,
           locationsData = options.locationsData || locations,
-          original = angular.copy(locationsData),
           levels = [],
           location;
 
       function reset(index) {
-        var level = angular.copy(original[index]);
+        var original = locationsData[index],
+            // avoid using the original object reference, which we do
+            // not want to modify
+            level = {
+              name: original.name,
+              items: original.items,
+              original: original
+            };
         if (hasAllItem) {
           // adds an all-item.
           // The all-item will be automatically selected when there is not
@@ -158,10 +164,11 @@ angular.module('eHealth.locations.services')
             isAll: true,
             name: 'all'
           };
-          level.items.unshift(allItem);
+          // do not edit `level.items` in place! it might refer to
+          // external location data which we don't want to mess up
+          level.items = original.items.concat(allItem);
           level.selected = allItem;
         }
-        level.original = angular.copy(level);
         level.byId = {};
 
         level.items.forEach(function(item) {
@@ -235,7 +242,7 @@ angular.module('eHealth.locations.services')
         levels[index] = level;
       }
 
-      original.forEach(function(level, index) {
+      locationsData.forEach(function(level, index) {
         reset(index);
       });
 
