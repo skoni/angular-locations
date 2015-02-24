@@ -5,6 +5,13 @@ file. This file is structured according to http://keepachangelog.com/
 
 - - -
 
+## 1.10.0 - 2015-02-24
+### Changed
+- Adopted new locations data, with a different name for districts in Liberia
+### Fixed
+- Fixed a bug which would show all items on an ancestor level when
+  items were selected on a descendant
+
 ## 1.9.0 - 2015-02-23
 ### Added
 - Performance improvements when creating a selected location over

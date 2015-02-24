@@ -94,6 +94,40 @@ describe('Service: SelectedLocationFactory', function () {
         expect(location).toBeDefined();
       });
     });
+    describe('producing a selected location with default options', function() {
+      beforeEach(function() {
+        location = selectedLocationFactory();
+      });
+      it('has quite a large number of third level items', function() {
+        expect(location.levels[2].items.length).toBe(850);
+      });
+      describe('when first and second level get selected', function() {
+        function selectFirst(depth) {
+          var level = location.levels[depth];
+          // here i am emulating user actions bound to Javascript
+          // objects via Angular, so i use this interface even if it
+          // is less convenient
+          level.selected = level.items[0];
+          level.update();
+        }
+        beforeEach(function() {
+          selectFirst(0);
+          selectFirst(1);
+        });
+        it('limits the number of options for the third level', function() {
+          expect(location.levels[2].items.length).toBe(14);
+        });
+        describe('when third and fourth level get selected', function() {
+          beforeEach(function() {
+            selectFirst(2);
+            selectFirst(3);
+          });
+          it('still show limited options for the third level', function() {
+            expect(location.levels[2].items.length).toBe(14);
+          });
+        });
+      });
+    });
   });
   describe('with locations for Mali', function(){
 
