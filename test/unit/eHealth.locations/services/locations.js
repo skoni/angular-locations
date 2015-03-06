@@ -26,4 +26,18 @@ describe('Service: locations', function () {
     expect(locations.decode(undefined, 1)).toBe(undefined);
     expect($log.error).not.toHaveBeenCalled();
   });
+  describe('when decoding a missing code', function(){
+    var result;
+    beforeEach(function(){
+      spyOn($log, 'debug');
+      result = locations.decode('missing', 1);
+    });
+    it('logs in debug', function(){
+      expect($log.debug)
+        .toHaveBeenCalledWith('we cannot find code `missing` in locations level cercle');
+    });
+    it('returns undefined', function(){
+      expect(result).toBe(undefined);
+    });
+  });
 });

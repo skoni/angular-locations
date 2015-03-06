@@ -30,8 +30,11 @@ angular.module('eHealth.locations.services')
               if (level[code]) {
                 return level[code].name;
               } else {
-                $log.error('we cannot find code '+code+' in locations level '+
-                           locations[l].name);
+                var message = 'we cannot find code `'+
+                      code+
+                      '` in locations level '+
+                      locations[l].name;
+                $log.debug(message);
               }
             } else {
               $log.error(countryCode+' locations have only '+indexes.length+
