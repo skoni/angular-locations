@@ -5,6 +5,10 @@ file. This file is structured according to http://keepachangelog.com/
 
 - - -
 
+## 1.10.1 - 2015-03-06
+### Changed
+- When a location code cannot be found, log at debug level, not error anymore
+
 ## 1.10.0 - 2015-02-24
 ### Changed
 - Adopted new locations data, with a different name for districts in Liberia

@@ -1,6 +1,6 @@
 {
   "name": "ehealthlocations",
-  "version": "1.10.0",
+  "version": "1.10.1",
   "author": {
     "name": "Francesco Occhipinti",
     "email": "f.occhipinti@gmail.com"
@@ -24,7 +24,8 @@
     "karma": "^0.12.22",
     "karma-chrome-launcher": "^0.1.4",
     "karma-jasmine": "^0.1.5",
-    "karma-phantomjs-launcher": "^0.1.4"
+    "karma-phantomjs-launcher": "^0.1.4",
+    "ng-annotate": "^0.15.4"
   },
   "engines": {
     "node": ">=0.8.0"

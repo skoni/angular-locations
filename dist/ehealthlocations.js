@@ -36,16 +36,16 @@ angular.module('eHealth.locations', [
   'eHealth.locations.services'
 ]);
 
-
+'use strict';
 
 angular.module('eHealth.locations.filters')
-  .filter('adminDivision', ["locations", "$filter", function (locations, $filter) {
+  .filter('adminDivision', function (locations, $filter) {
     return function (id, level) {
       return locations.decode(id, level-1);
     };
-  }]);
+  });
 
-
+'use strict';
 
 angular.module('eHealth.locations.services')
   .provider('locations', function() {
@@ -65,10 +65,10 @@ angular.module('eHealth.locations.services')
     }];
   });
 
-
+'use strict';
 
 angular.module('eHealth.locations.services')
-  .factory('locationsFactory', ["$log", "ml", "gn", "lr", "sl", "mg", function($log, ml, gn, lr, sl, mg) {
+  .factory('locationsFactory', function($log, ml, gn, lr, sl, mg) {
     var map = {
       ml: ml,
       gn: gn,
@@ -97,8 +97,11 @@ angular.module('eHealth.locations.services')
               if (level[code]) {
                 return level[code].name;
               } else {
-                $log.error('we cannot find code '+code+' in locations level '+
-                           locations[l].name);
+                var message = 'we cannot find code `'+
+                      code+
+                      '` in locations level '+
+                      locations[l].name;
+                $log.debug(message);
               }
             } else {
               $log.error(countryCode+' locations have only '+indexes.length+
@@ -113,12 +116,12 @@ angular.module('eHealth.locations.services')
         throw new Error(e);
       }
     };
-  }]);
+  });
 
-
+'use strict';
 
 angular.module('eHealth.locations.services')
-  .factory('selectedLocationFactory', ["locations", "$log", function (locations, $log) {
+  .factory('selectedLocationFactory', function (locations, $log) {
 
     // Restrict locations. This originally leveraged lodash/underscore _.filter
     // & _.find functions, as lodash/underscore is not available in this
@@ -330,4 +333,4 @@ angular.module('eHealth.locations.services')
       return location;
     }
     return create;
-  }]);
+  });
