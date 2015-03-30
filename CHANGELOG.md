@@ -5,6 +5,13 @@ file. This file is structured according to http://keepachangelog.com/
 
 - - -
 
+## 1.11.0 - 2015-03-30
+### Added
+- Incremental mode for selected locations
+### Changed
+- When a level of a selected location is selected, its childs will not
+  have the first item selected by default
+
 ## 1.10.1 - 2015-03-06
 ### Changed
 - When a location code cannot be found, log at debug level, not error anymore

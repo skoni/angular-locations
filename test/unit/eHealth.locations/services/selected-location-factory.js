@@ -178,7 +178,7 @@ describe('Service: SelectedLocationFactory', function () {
         expect(location.levels[0].items.length).toBe(2);
         expect(location.levels[1].items.length).toBe(1);
         expect(location.levels[1].selected).toBeUndefined()
-        expect(location.levels[2].items.length).toBe(1);
+        expect(location.levels[2].items.length).toBe(2);
         expect(location.levels[1].selected).toBeUndefined()
       });
       it('unselects levels below if conflicting with the parent', function() {
@@ -363,6 +363,67 @@ describe('Service: SelectedLocationFactory', function () {
           location.levels[1].update();
           expect(location.getAdminDivisions()).toEqual({
             adminDivision1 : 'B'
+          });
+        });
+      });
+    });
+  });
+  describe('in incremental mode', function(){
+    /*
+     * incrementally showing levels was initially used in contact
+     * tracing in Liberia, in order to cope with the high number of
+     * locations in the levels with more specificity, which was
+     * freezing the app
+     */
+
+    // load the service's module
+    beforeEach(module('eHealth.locations.services'));
+
+    // instantiate service
+    var selectedLocationFactory,
+        location;
+
+    beforeEach(module(function(locationsProvider) {
+      locationsProvider.setCountryCode('lr');
+    }));
+    beforeEach(inject(function (_selectedLocationFactory_) {
+      selectedLocationFactory = _selectedLocationFactory_;
+      location = selectedLocationFactory({
+        incremental: true
+      });
+    }));
+    it('initially shows just the first level', function() {
+      expect(location.levels.length).toBe(1);
+    });
+    describe('after the first level is selected', function() {
+      beforeEach(function() {
+        var level = location.levels[0];
+        level.selected = level.items[0];
+        level.update();
+      });
+      it('shows the second level', function() {
+        expect(location.levels.length).toBe(2);
+      });
+      describe('the second level is selected', function(){
+        beforeEach(function(){
+          var level = location.levels[1];
+          level.selected = level.items[1];
+          level.update();
+        });
+        it('shows the third level', function(){
+          expect(location.levels.length).toBe(3);
+        });
+        describe('the first level is changed', function() {
+          beforeEach(function(){
+            var level = location.levels[0];
+            level.selected = level.items[2];
+            level.update();
+          });
+          it('unselects the second level', function(){
+            expect(location.levels[1].selected).toBeFalsy();
+          });
+          it('shows the second level, not the third', function(){
+            expect(location.levels.length).toBe(2);
           });
         });
       });

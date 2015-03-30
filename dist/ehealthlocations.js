@@ -36,16 +36,16 @@ angular.module('eHealth.locations', [
   'eHealth.locations.services'
 ]);
 
-'use strict';
+
 
 angular.module('eHealth.locations.filters')
-  .filter('adminDivision', function (locations, $filter) {
+  .filter('adminDivision', ["locations", "$filter", function (locations, $filter) {
     return function (id, level) {
       return locations.decode(id, level-1);
     };
-  });
+  }]);
 
-'use strict';
+
 
 angular.module('eHealth.locations.services')
   .provider('locations', function() {
@@ -65,10 +65,10 @@ angular.module('eHealth.locations.services')
     }];
   });
 
-'use strict';
+
 
 angular.module('eHealth.locations.services')
-  .factory('locationsFactory', function($log, ml, gn, lr, sl, mg) {
+  .factory('locationsFactory', ["$log", "ml", "gn", "lr", "sl", "mg", function($log, ml, gn, lr, sl, mg) {
     var map = {
       ml: ml,
       gn: gn,
@@ -116,16 +116,16 @@ angular.module('eHealth.locations.services')
         throw new Error(e);
       }
     };
-  });
+  }]);
 
-'use strict';
+
 
 angular.module('eHealth.locations.services')
-  .factory('selectedLocationFactory', function (locations, $log) {
+  .factory('selectedLocationFactory', ["locations", "$log", function (locations, $log) {
 
     // Restrict locations. This originally leveraged lodash/underscore _.filter
     // & _.find functions, as lodash/underscore is not available in this
-    // project, and while we can't rely on native implenetations accross
+    // project, and while we can't rely on native implementations accross
     // different environements just yet, and in the name of keeping things lean
     // and performant (at the price of readability / cleanliness), we'll do
     // this the ugly way
@@ -147,6 +147,7 @@ angular.module('eHealth.locations.services')
       options = options || {};
       var hasAllItem = options.hasAllItem,
           locationsData = options.locationsData || locations,
+          incremental = options.incremental || false,
           levels = [],
           location;
 
@@ -200,8 +201,8 @@ angular.module('eHealth.locations.services')
           }
         }
         function updateDown(selected, depth) {
+          var level = levels[depth];
           if (selected) {
-            var level = levels[depth];
             if (level) {
               if (selected.isAll) {
                 removeFilters();
@@ -226,8 +227,31 @@ angular.module('eHealth.locations.services')
                 }
               }
               // continue recursively
-              updateDown(level.items[0], depth + 1);
+              updateDown(level.selected, depth + 1);
             } else {
+              // level not existing. we could be at the end of the
+              // hierarchy, or we could run in incremental mode. in
+              // the second case levels are created just when their
+              // parent is selected
+              if (incremental && locationsData[depth]) {
+                reset(depth); // this will create the level
+                updateDown(selected, depth); // now try again
+              } else {
+                // end of the hierarchy
+                return;
+              }
+            }
+          } else {
+            // parent not selected. if we are running in incremental
+            // mode, we need to remove child levels
+            if (incremental && level) {
+              // remove this level and all childs, `splice` gets an
+              // 1-based index of the last element to be kept
+              levels.splice(depth, Number.MAX_VALUE);
+            } else {
+              // either end of the hierarchy or end of the levels we
+              // want to show, if in incremental mode, since the
+              // parent is not selected
               return;
             }
           }
@@ -258,9 +282,13 @@ angular.module('eHealth.locations.services')
         levels[index] = level;
       }
 
-      locationsData.forEach(function(level, index) {
-        reset(index);
-      });
+      if (incremental) {
+        reset(0);
+      } else {
+        locationsData.forEach(function(level, index) {
+          reset(index);
+        });
+      }
 
       location = {
         levels: levels,
@@ -333,4 +361,4 @@ angular.module('eHealth.locations.services')
       return location;
     }
     return create;
-  });
+  }]);
