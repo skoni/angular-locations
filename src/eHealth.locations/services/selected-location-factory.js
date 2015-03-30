@@ -81,6 +81,11 @@ angular.module('eHealth.locations.services')
           }
         }
         function updateDown(selected, depth) {
+          function hide() {
+            // remove this level and all childs, `splice` gets an
+            // 1-based index of the last element to be kept
+            levels.splice(depth, Number.MAX_VALUE);
+          }
           var level = levels[depth];
           if (selected) {
             if (level) {
@@ -89,25 +94,32 @@ angular.module('eHealth.locations.services')
               } else {
                 level.filterByParent(selected.id);
               }
-              if (level.selected) {
-                // in case we have an all-item, always select the all-item
-                if (hasAllItem) {
-                  level.selected = level.items[0];
-                } else {
-                  // cancel the selection if invalid
-                  var found;
-                  level.items.forEach(function(item) {
-                    if (item.id === level.selected.id) {
-                      found = true;
+              if (level.items.length) {
+                if (level.selected) {
+                  // in case we have an all-item, always select the all-item
+                  if (hasAllItem) {
+                    level.selected = level.items[0];
+                  } else {
+                    // cancel the selection if invalid
+                    var found;
+                    level.items.forEach(function(item) {
+                      if (item.id === level.selected.id) {
+                        found = true;
+                      }
+                    });
+                    if (!found) {
+                      delete level.selected;
                     }
-                  });
-                  if (!found) {
-                    delete level.selected;
                   }
                 }
+                // continue recursively
+                updateDown(level.selected, depth + 1);
+              } else {
+                // this level has no items
+                if (incremental) {
+                  hide();
+                }
               }
-              // continue recursively
-              updateDown(level.selected, depth + 1);
             } else {
               // level not existing. we could be at the end of the
               // hierarchy, or we could run in incremental mode. in
@@ -125,9 +137,7 @@ angular.module('eHealth.locations.services')
             // parent not selected. if we are running in incremental
             // mode, we need to remove child levels
             if (incremental && level) {
-              // remove this level and all childs, `splice` gets an
-              // 1-based index of the last element to be kept
-              levels.splice(depth, Number.MAX_VALUE);
+              hide();
             } else {
               // either end of the hierarchy or end of the levels we
               // want to show, if in incremental mode, since the
