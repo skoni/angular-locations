@@ -5,6 +5,10 @@ file. This file is structured according to http://keepachangelog.com/
 
 - - -
 
+## 1.12.0 - 2015-03-30
+### Added
+- In incremental mode, do not show empty levels
+
 ## 1.11.0 - 2015-03-30
 ### Added
 - Incremental mode for selected locations

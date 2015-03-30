@@ -407,11 +407,26 @@ describe('Service: SelectedLocationFactory', function () {
       describe('the second level is selected', function(){
         beforeEach(function(){
           var level = location.levels[1];
-          level.selected = level.items[1];
+          level.selected = level.items[0];
           level.update();
         });
         it('shows the third level', function(){
           expect(location.levels.length).toBe(3);
+        });
+        describe('the third level is selected', function() {
+          beforeEach(function(){
+            var level = location.levels[2];
+            level.selected = level.items[0];
+            level.update();
+          });
+          it('shows the fourth level', function() {
+            expect(location.levels.length).toBe(4);
+          });
+          it('shows the right items in the fourth level', function() {
+            expect(location.levels[3].items[0].parentId)
+              .toBe('BASS : Commonwealth : Buchanan Port');
+            expect(location.levels[3].items.length).toBe(1);
+          });
         });
         describe('the first level is changed', function() {
           beforeEach(function(){
@@ -427,6 +442,19 @@ describe('Service: SelectedLocationFactory', function () {
           });
         });
       });
+    });
+    it('correctly filters also using the `selectBy` interface', function() {
+      location.select(0, 'BASS');
+      location.select(1, 'BASS : Commonwealth');
+      location.select(2, 'BASS : Commonwealth : Buchanan Port');
+      expect(location.levels.length).toBe(4);
+      expect(location.levels[3].items.length).toBe(1);
+    });
+    it('does not show levels when all their items are filtered', function() {
+      location.select(0, 'MONT');
+      location.select(1, 'MONT : 100');
+      location.select(2, 'MONT : 100 : Bong Mines Bridge');
+      expect(location.levels.length).toBe(3);
     });
   });
 });
