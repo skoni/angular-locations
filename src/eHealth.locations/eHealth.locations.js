@@ -9,7 +9,9 @@ angular.module('eHealth.locations.config', [])
   });
 
 // Modules
-angular.module('eHealth.locations.directives', []);
+angular.module('eHealth.locations.directives', [
+  'eHealth.locations.services'
+]);
 angular.module('eHealth.locations.filters', [
   'eHealth.locations.services'
 ]);

@@ -11,7 +11,9 @@ angular.module('eHealth.locations.config', [])
   });
 
 // Modules
-angular.module('eHealth.locations.directives', []);
+angular.module('eHealth.locations.directives', [
+  'eHealth.locations.services'
+]);
 angular.module('eHealth.locations.filters', [
   'eHealth.locations.services'
 ]);
@@ -37,6 +39,23 @@ angular.module('eHealth.locations.data', [])
 .constant('mg', [{depth:0,name:'region',plural:'regions',items:[{name:'diana',id:'DIA'},{name:'sava',id:'SAV'},{name:'itasy',id:'ITA'},{name:'analamanga',id:'ANM'},{name:'vakinankaratra',id:'VAK'},{name:'bongolava',id:'BON'},{name:'sofia',id:'SOF'},{name:'boeny',id:'BOE'},{name:'betsiboka',id:'BES'},{name:'melaky',id:'MEL'},{name:'alaotra-mangoro',id:'AMA'},{name:'atsinanana',id:'ATS'},{name:'analanjirofo',id:'ANN'},{name:'amoron\'i mania',id:'AMO'},{name:'matsiatra ambony',id:'MAT'},{name:'vatovavy-fitovinany',id:'VFI'},{name:'atsimo-atsinanana',id:'AAT'},{name:'ihorombe',id:'IHO'},{name:'menabe',id:'MEN'},{name:'atsimo-andrefana',id:'AAN'},{name:'androy',id:'AND'},{name:'anosy',id:'ANO'}]}])
 
 ;'use strict';
+
+angular.module('eHealth.locations.directives')
+  .directive('selectedAdminDivision', function () {
+    return {
+      restrict: 'E',
+      template: '{{ name }}',
+      scope: {
+        location: '=',
+        placeholder: '@'
+      },
+      link: function postLink(scope) {
+        var selected = scope.location.innermost;
+        scope.name = selected ? selected.name : scope.placeholder;
+      }
+    };
+  });
+'use strict';
 
 angular.module('eHealth.locations.filters')
   .filter('adminDivision', function (locations, $filter) {
