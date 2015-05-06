@@ -473,5 +473,18 @@ describe('Service: SelectedLocationFactory', function () {
         expect(location.getAdminDivisions()).toEqual({});
       });
     });
+
+    describe('innermost()', function () {
+      it('returns null if there is no selection', function () {
+        location.clear();
+        expect(location.innermost).toBe(null);
+      });
+
+      it('returns innermost division for multi-level selection', function () {
+        location.select(0, 'BASS');
+        location.select(1, 'BASS : Commonwealth');
+        expect(location.innermost.id).toBe('BASS : Commonwealth');
+      });
+    });
   });
 });
