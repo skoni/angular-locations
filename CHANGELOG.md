@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this
 file. This file is structured according to http://keepachangelog.com/
 
 - - -
+## Unreleased - Upcoming
+### Added
+- method for clearing multi-level selection
+- property to get innermost selection
+- directive for rendering innermost selected division
 
 ## 1.12.0 - 2015-03-30
 ### Added
