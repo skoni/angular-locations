@@ -64,10 +64,10 @@ var mockCurrentUser = {
 };
 
 describe('Service: SelectedLocationFactory', function () {
-  describe('with locations for Liberia', function() {
-    // load the service's module
-    beforeEach(module('eHealth.locations.services'));
 
+  beforeEach(module('eHealth.locations.services'));
+
+  describe('with locations for Liberia', function() {
     // instantiate service
     var selectedLocationFactory,
         location;
@@ -129,11 +129,8 @@ describe('Service: SelectedLocationFactory', function () {
       });
     });
   });
+
   describe('with locations for Mali', function(){
-
-    // load the service's module
-    beforeEach(module('eHealth.locations.services'));
-
     // instantiate service
     var selectedLocationFactory;
     beforeEach(module(function(locationsProvider) {
@@ -368,6 +365,7 @@ describe('Service: SelectedLocationFactory', function () {
       });
     });
   });
+
   describe('in incremental mode', function(){
     /*
      * incrementally showing levels was initially used in contact
@@ -375,9 +373,6 @@ describe('Service: SelectedLocationFactory', function () {
      * locations in the levels with more specificity, which was
      * freezing the app
      */
-
-    // load the service's module
-    beforeEach(module('eHealth.locations.services'));
 
     // instantiate service
     var selectedLocationFactory,
@@ -455,6 +450,28 @@ describe('Service: SelectedLocationFactory', function () {
       location.select(1, 'MONT : 100');
       location.select(2, 'MONT : 100 : Bong Mines Bridge');
       expect(location.levels.length).toBe(3);
+    });
+  });
+
+  describe('common behaviour', function () {
+
+    var location;
+
+    beforeEach(module(function(locationsProvider) {
+      locationsProvider.setCountryCode('lr');
+    }));
+
+    beforeEach(inject(function (selectedLocationFactory) {
+      location = selectedLocationFactory();
+    }));
+
+    describe('clear()', function () {
+      it('clears out all current selections', function () {
+        location.select(0, 'BASS');
+        location.select(1, 'BASS : Commonwealth');
+        location.clear();
+        expect(location.getAdminDivisions()).toEqual({});
+      });
     });
   });
 });
