@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this
 file. This file is structured according to http://keepachangelog.com/
 
 - - -
+## 1.13.1 - 2015-05-07
+### Fixed
+- fix initial rendering of selected-admin-division
 
 ## 1.13.0 - 2015-05-07
 ### Added
