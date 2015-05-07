@@ -50,7 +50,7 @@ angular.module('eHealth.locations.directives')
         placeholder: '@'
       },
       link: function postLink(scope) {
-        var selected = scope.location.innermost;
+        var selected = scope.location.getInnermost();
         scope.name = selected ? selected.name : scope.placeholder;
       }
     };
@@ -383,18 +383,15 @@ angular.module('eHealth.locations.services')
           });
           return angular.copy(adminDivisions);
         },
+        getInnermost: function () {
+          var selected = levels.filter(function (l) { return l.selected });
+          var level = selected.slice(-1)[0];
+          return level ? level.selected : null;
+        },
         clear: function () {
           levels.forEach(function (level) { delete level.selected });
         }
       };
-
-      Object.defineProperty(location, 'innermost', {
-        get: function () {
-          var selected = levels.filter(function (l) { return l.selected });
-          var innermost = selected.slice(-1)[0];
-          return innermost ? innermost.selected : null;
-        }
-      });
       return location;
     }
     return create;

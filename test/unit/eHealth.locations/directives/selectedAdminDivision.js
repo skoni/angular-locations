@@ -25,7 +25,9 @@ describe('Directive: selected-admin-division', function () {
   }
 
   function fakeLocation() {
-    return {innermost: null};
+    return {
+      getInnermost: jasmine.createSpy().andReturn(null)
+    };
   }
 
   beforeEach(inject(function ($rootScope, _$compile_) {
@@ -40,20 +42,20 @@ describe('Directive: selected-admin-division', function () {
   }
 
   it('renders name of currently selected admin division', function () {
-    scope.location = {innermost: {name: 'Grand Gedeh'}};
+    scope.location.getInnermost.andReturn({name: 'Grand Gedeh'});
     render();
     expect(element.text()).toBe('Grand Gedeh');
   });
 
   it('is empty when there is no selection', function () {
-    scope.location = {innermost: null};
+    scope.location.getInnermost.andReturn(null);
     render();
     expect(element.text()).toBe('');
   });
 
   it('uses provided placeholder text for empty selection', function () {
     element.attr('placeholder', 'All Divisions');
-    scope.location = {innermost: null};
+    scope.location.getInnermost.andReturn(null);
     render();
     expect(element.text()).toBe('All Divisions');
   })

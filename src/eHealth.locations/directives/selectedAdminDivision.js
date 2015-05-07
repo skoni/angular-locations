@@ -10,7 +10,7 @@ angular.module('eHealth.locations.directives')
         placeholder: '@'
       },
       link: function postLink(scope) {
-        var selected = scope.location.innermost;
+        var selected = scope.location.getInnermost();
         scope.name = selected ? selected.name : scope.placeholder;
       }
     };

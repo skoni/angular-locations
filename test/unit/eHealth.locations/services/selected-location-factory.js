@@ -474,16 +474,16 @@ describe('Service: SelectedLocationFactory', function () {
       });
     });
 
-    describe('innermost()', function () {
+    describe('getInnermost()', function () {
       it('returns null if there is no selection', function () {
         location.clear();
-        expect(location.innermost).toBe(null);
+        expect(location.getInnermost()).toBe(null);
       });
 
       it('returns innermost division for multi-level selection', function () {
         location.select(0, 'BASS');
         location.select(1, 'BASS : Commonwealth');
-        expect(location.innermost.id).toBe('BASS : Commonwealth');
+        expect(location.getInnermost().id).toBe('BASS : Commonwealth');
       });
     });
   });
