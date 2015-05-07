@@ -51,7 +51,12 @@ angular.module('eHealth.locations.directives')
       },
       link: function postLink(scope) {
         var selected = scope.location.getInnermost();
-        scope.name = selected ? selected.name : scope.placeholder;
+        scope.$watch(
+          scope.location.getInnermost,
+          function (selected) {
+            // scope.name = selected ? selected.name : scope.placeholder;
+          }
+        );
       }
     };
   });
