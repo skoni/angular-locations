@@ -389,7 +389,10 @@ angular.module('eHealth.locations.services')
           return level ? level.selected : null;
         },
         clear: function () {
-          levels.forEach(function (level) { delete level.selected });
+          var root = levels[0];
+          if (root) {
+            root.deselect();
+          }
         }
       };
       return location;
