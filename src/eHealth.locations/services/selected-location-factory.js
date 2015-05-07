@@ -246,6 +246,17 @@ angular.module('eHealth.locations.services')
             }
           });
           return angular.copy(adminDivisions);
+        },
+        getInnermost: function () {
+          var selected = levels.filter(function (l) { return l.selected });
+          var level = selected.slice(-1)[0];
+          return level ? level.selected : null;
+        },
+        clear: function () {
+          var root = levels[0];
+          if (root) {
+            root.deselect();
+          }
         }
       };
       return location;
