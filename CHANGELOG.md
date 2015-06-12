@@ -8,6 +8,8 @@ file. This file is structured according to http://keepachangelog.com/
 ## 1.14.0 - 2015-06-12
 ### Added
 - Added other division for Liberia based on clans not only on health districts
+### Fixed
+- Changing parent level deselects ALL children levels
 
 ## 1.13.1 - 2015-05-07
 ### Fixed
