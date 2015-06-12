@@ -77,6 +77,8 @@ module.exports = function (grunt) {
             .readJSON('bower/locations/json/sierra_leone.json'),
           lr: grunt.file
             .readJSON('bower/locations/json/liberia.json'),
+          lr_clans: grunt.file
+            .readJSON('bower/locations/json/liberia_clans.json'),
           gn: grunt.file
             .readJSON('bower/locations/json/guinea.json'),
           mg: grunt.file
@@ -94,7 +96,7 @@ module.exports = function (grunt) {
     ngAnnotate: {
       app: {
         files: {
-          'dist/ehealthlocations.js': ['src/eHealth.locations/{*,**/*}.js']
+          'dist/ehealthlocations.js': ['dist/ehealthlocations.js']
         }
       }
     },

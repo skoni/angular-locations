@@ -12,7 +12,7 @@ describe('the locationsFactory service', function(){
   beforeEach(inject(function(_locationsFactory_) {
     locationsFactory = _locationsFactory_;
   }));
-  ['ml', 'lr', 'gn', 'gin', 'sl', 'mg'].forEach(function(code) {
+  ['ml', 'lr', 'lr_clans', 'gn', 'gin', 'sl', 'mg'].forEach(function(code) {
     it('provides locations for '+code, function(){
       expect(locationsFactory(code)).toBeDefined();
     });
