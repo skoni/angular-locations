@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('eHealth.locations.services')
-  .factory('locationsFactory', function($log, ml, gn, lr, sl, mg) {
+  .factory('locationsFactory', function($log, ml, gn, lr, lr_clans, sl, mg) {
     var map = {
       ml: ml,
       gn: gn,
       gin: gn,
       lr: lr,
+      lr_clans: lr_clans,
       sl: sl,
       mg: mg
     };

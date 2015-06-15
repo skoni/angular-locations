@@ -486,5 +486,32 @@ describe('Service: SelectedLocationFactory', function () {
         expect(location.getInnermost().id).toBe('BASS : Commonwealth');
       });
     });
+
+    describe('when there is a deep selection', function () {
+      var parent, level2, level3;
+
+      beforeEach(function () {
+        parent = location.levels[0];
+        level2 = location.levels[1];
+        level3 = location.levels[2];
+        level3.selected = level3.items[0]; // selects third level
+        level3.update();
+      });
+
+      it('change parent deselects second', function () {
+        parent.selected = parent.items[1];
+        parent.update();
+
+        expect(level2.selected).toBeFalsy();
+      });
+
+      it('change parent unselects the third level', function() {
+        parent.selected = parent.items[1];
+        parent.update();
+
+        expect(level3.selected).toBeFalsy();
+      });
+    })
+
   });
 });
