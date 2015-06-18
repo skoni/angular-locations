@@ -40,19 +40,7 @@ angular.module('eHealth.locations.services')
               items: original.items,
               original: original
             };
-        if (hasAllItem) {
-          // adds an all-item.
-          // The all-item will be automatically selected when there is not
-          // a more narrow selection for this level or a child level
-          var allItem = {
-            isAll: true,
-            name: 'all'
-          };
-          // do not edit `level.items` in place! it might refer to
-          // external location data which we don't want to mess up
-          level.items = original.items.concat(allItem);
-          level.selected = allItem;
-        }
+        removeFilters(true);
         level.byId = {};
 
         level.items.forEach(function(item) {
@@ -66,8 +54,24 @@ angular.module('eHealth.locations.services')
             throw new Error('id '+id+' in not in level '+level.name);
           }
         };
-        function removeFilters() {
+        function removeFilters(selected) {
           level.items = original.items;
+          if (hasAllItem) {
+            // adds an all-item.
+            // The all-item will be automatically selected when there is not
+            // a more narrow selection for this level or a child level
+            var allItem = {
+              isAll: true,
+              name: 'all'
+            };
+
+            // do not edit `level.items` in place! it might refer to
+            // external location data which we don't want to mess up
+            level.items = [allItem].concat(original.items);
+            if (selected) {
+              level.selected = allItem;
+            }
+          }
         }
         function updateUp(selected, depth) {
           if (selected) {
@@ -89,11 +93,8 @@ angular.module('eHealth.locations.services')
           var level = levels[depth];
           if (selected) {
             if (level) {
-              if (selected.isAll) {
-                removeFilters();
-              } else {
-                level.filterByParent(selected.id);
-              }
+              level.filterByParent(selected.id);
+
               if (level.items.length) {
                 if (level.selected) {
                   // in case we have an all-item, always select the all-item
@@ -162,9 +163,12 @@ angular.module('eHealth.locations.services')
           }
         };
         level.filterByParent = function(id) {
-          level.items = original.items.filter(function (item) {
-            return item.isAll || item.parentId === id;
-          });
+          removeFilters(false);
+          if (id) {
+            level.items = level.items.filter(function (item) {
+              return item.isAll || item.parentId === id;
+            });
+          }
         };
         level.filterBySelectedParent = function() {
           level.filterByParent(level.selected.parentId);
