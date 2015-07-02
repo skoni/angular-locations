@@ -5,6 +5,11 @@ file. This file is structured according to http://keepachangelog.com/
 
 - - -
 
+## 2.0.0 - 2015-07-02
+### Changed
+- Change some chiefdoms in Sierra Leone. This is a breaking change, see
+  https://github.com/eHealthAfrica/locations/issues/27 for details
+
 ## 1.14.1 - 2015-06-18
 ### Fixed
 - Changing parent level does not remove ALL option in children levels
