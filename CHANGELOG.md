@@ -5,6 +5,10 @@ file. This file is structured according to http://keepachangelog.com/
 
 - - -
 
+## 2.0.1 - 2015-07-08
+### Fixed
+- Updated the bower file in order to reflect the last release
+
 ## 2.0.0 - 2015-07-02
 ### Changed
 - Change some chiefdoms in Sierra Leone. This is a breaking change, see
