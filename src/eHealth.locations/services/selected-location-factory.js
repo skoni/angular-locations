@@ -26,6 +26,7 @@ angular.module('eHealth.locations.services')
     function create(options) {
       options = options || {};
       var hasAllItem = options.hasAllItem,
+          allItemName = options.allItemName || 'all',
           locationsData = options.locationsData || locations,
           incremental = options.incremental || false,
           levels = [],
@@ -62,7 +63,7 @@ angular.module('eHealth.locations.services')
             // a more narrow selection for this level or a child level
             var allItem = {
               isAll: true,
-              name: 'all'
+              name: allItemName
             };
 
             // do not edit `level.items` in place! it might refer to

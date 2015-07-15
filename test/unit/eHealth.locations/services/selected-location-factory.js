@@ -269,7 +269,8 @@ describe('Service: SelectedLocationFactory', function () {
         beforeEach(function() {
           locsWithAll = selectedLocationFactory({
             locationsData: testLocationData,
-            hasAllItem: true
+            hasAllItem: true,
+            allItemName: 'foo'
           });
         });
         it('has all-items on each level as first element', function() {
@@ -282,6 +283,9 @@ describe('Service: SelectedLocationFactory', function () {
           locsWithAll.levels[0].selected = locsWithAll.levels[0].items[1];
           locsWithAll.levels[0].update();
           expect(locsWithAll.levels[1].selected.isAll);
+        });
+        it('should have custom text all-item name', function() {
+          expect(locsWithAll.levels[0].items[0].name).toBe('foo');
         });
       });
     });

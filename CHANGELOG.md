@@ -5,6 +5,10 @@ file. This file is structured according to http://keepachangelog.com/
 
 - - -
 
+## Unreleased
+### Added
+- Added option to customize all item name
+
 ## 2.0.1 - 2015-07-08
 ### Fixed
 - Updated the bower file in order to reflect the last release
